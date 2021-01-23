@@ -7,6 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.netology.domain.Book;
 import ru.netology.domain.Product;
 import ru.netology.domain.Smartphone;
+import ru.netology.exception.NotFoundException;
 import ru.netology.repository.ProductRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -78,6 +79,17 @@ class ProductManagerTest {
         Product[] expected = new Product[0];
         Product[] actual = manager.searchBy("nothing");
         assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldRemoveById() {
+        manager.remoVeById(2);
+        assertNull(manager.findById(2));
+    }
+
+    @Test
+    void shouldRemoveByIdThrowNotFoundException() {
+        assertThrows(NotFoundException.class, () -> manager.remoVeById(9));
     }
 
 }

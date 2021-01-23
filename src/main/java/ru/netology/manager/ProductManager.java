@@ -3,6 +3,7 @@ package ru.netology.manager;
 import ru.netology.domain.Book;
 import ru.netology.domain.Product;
 import ru.netology.domain.Smartphone;
+import ru.netology.exception.NotFoundException;
 import ru.netology.repository.ProductRepository;
 
 public class ProductManager {
@@ -38,6 +39,18 @@ public class ProductManager {
         } else {
             Smartphone smartphone = (Smartphone) product;
             return smartphone.getManufacturer().equalsIgnoreCase(search) || smartphone.getName().equalsIgnoreCase(search);
+        }
+    }
+
+    public Product findById(int id) {
+        return repository.findById(id);
+    }
+
+    public void remoVeById(int id) {
+        if (repository.findById(id) == null) {
+            throw new NotFoundException(id);
+        } else {
+            repository.removeById(id);
         }
     }
 }
